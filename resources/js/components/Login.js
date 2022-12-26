@@ -1,11 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import {
-    createBrowserRouter,
-    RouterProvider,
-    Route,
-    Link,
-} from "react-router-dom";
 function Login() {
     return (
         <div className="flex items-center h-full">
@@ -20,6 +15,7 @@ function Login() {
                         </label>
                         <input
                             type="text"
+                            name="username"
                             className="form-control block w-full
         px-3
         py-1.5
@@ -34,6 +30,7 @@ function Login() {
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             placeholder="Enter username"
+                            required
                         />
                     </div>
                     <div className="form-group mb-6">
@@ -44,6 +41,7 @@ function Login() {
                             Password
                         </label>
                         <input
+                            name="password"
                             type="password"
                             className="form-control block
         w-full
@@ -61,6 +59,7 @@ function Login() {
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleInputPassword2"
                             placeholder="Password"
+                            required
                         />
                     </div>
                     <div className="flex justify-between items-center mb-6">
@@ -107,12 +106,12 @@ function Login() {
                     </button>
                     <p className="text-gray-800 mt-6 text-center">
                         Not a member?{" "}
-                        <a
-                            href="#!"
+                        <Link
+                            to="/register"
                             className="text-blue-600 hover:text-blue-700 focus:text-blue-700 transition duration-200 ease-in-out"
                         >
                             Register
-                        </a>
+                        </Link>
                     </p>
                 </form>
             </div>

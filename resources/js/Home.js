@@ -1,11 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Login from "./components/Login";
+import Register from "./components/Register";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 function Home() {
     return (
-        <div className="container h-screen ">
-            <Login />
-        </div>
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    <div className="container h-screen ">
+                        <Login />
+                    </div>
+                </Route>
+                <Route exact path="/register">
+                    <div className="container h-screen ">
+                        <Register />
+                    </div>
+                </Route>
+            </Switch>
+        </Router>
     );
 }
 export default Home;
