@@ -1,13 +1,14 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Register() {
     const [formValues, setFormValues] = useState({
-        fname: "",
-        lname: "",
+        name: "",
         email: "",
         password: "",
     });
+    const [dataAdded, isDataAdded] = useState(false);
     const handleInput = (e) => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
@@ -19,110 +20,93 @@ function Register() {
         e.preventDefault();
 
         const data = {
-            fname: formValues.fname,
-            lname: formValues.lname,
+            name: formValues.name,
             email: formValues.email,
             password: formValues.password,
         };
 
-        console.log(data);
+        axios.post("http://localhost:3000/api/register", data).then((res) => {
+            if (res.data.status === 200) {
+                console.log("succesfully record");
+                e.target.reset();
+
+                isDataAdded(true);
+            }
+        });
     };
     return (
-        <div className="flex items-center h-full">
-            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md mx-auto">
-                <form method="post" onSubmit={submitRegisterForm}>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="form-group mb-6">
-                            <input
-                                name="fname"
-                                type="text"
-                                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                id="exampleInput123"
-                                aria-describedby="emailHelp123"
-                                placeholder="First name"
-                                required
-                                onChange={handleInput}
-                            />
-                        </div>
-                        <div className="form-group mb-6">
-                            <input
-                                name="lname"
-                                type="text"
-                                className="form-control
-            block
-            w-full
-            px-3
-            py-1.5
-            text-base
-            font-normal
-            text-gray-700
-            bg-white bg-clip-padding
-            border border-solid border-gray-300
-            rounded
-            transition
-            ease-in-out
-            m-0
-            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                id="exampleInput124"
-                                aria-describedby="emailHelp124"
-                                placeholder="Last name"
-                                onChange={handleInput}
-                            />
-                        </div>
+        <div className="flex items-center h-full mx-auto">
+            <div className="block p-6 rounded-lg shadow-lg bg-white max-w-md mx-auto w-1/4">
+                {dataAdded ? (
+                    <div
+                        className="p-4 mb-4 text-sm text-center text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                        role="alert"
+                    >
+                        <span className="font-medium">
+                            Registered Sucessfully
+                        </span>
                     </div>
+                ) : (
+                    ""
+                )}
+
+                <form
+                    action="/register"
+                    method="POST"
+                    onSubmit={submitRegisterForm}
+                >
+                    <div className="form-group mb-6 ">
+                        <label
+                            for="name"
+                            className="form-label inline-block mb-2 text-gray-700"
+                        >
+                            Name
+                        </label>
+                        <input
+                            name="name"
+                            type="text"
+                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            id="name"
+                            aria-describedby="emailHelp123"
+                            placeholder="Name"
+                            required
+                            onChange={handleInput}
+                        />
+                    </div>
+                    <div className="form-group mb-6"></div>
                     <div className="form-group mb-6">
+                        <label
+                            for="email"
+                            className="form-label inline-block mb-2 text-gray-700"
+                        >
+                            Email
+                        </label>
                         <input
                             name="email"
                             type="email"
                             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            id="exampleInput125"
+                            id="email"
                             placeholder="Email address"
                             onChange={handleInput}
                         />
                     </div>
-                    <div className="form-group mb-6">
-                        <input
-                            name="password"
-                            type="password"
-                            className="form-control block
-                            onChange={handleInput}
-          w-full
-          px-3
-          py-1.5
-          text-base
-          font-normal
-          text-gray-700
-          bg-white bg-clip-padding
-          border border-solid border-gray-300
-          rounded
-          transition
-          ease-in-out
-          m-0
-          focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            id="exampleInput126"
-                            placeholder="Password"
-                        />
-                    </div>
+                    <label
+                        for="password"
+                        className="form-label inline-block mb-2 text-gray-700"
+                    >
+                        Password
+                    </label>
+                    <input
+                        name="password"
+                        type="password"
+                        onChange={handleInput}
+                        className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                        id="password"
+                        placeholder="Password"
+                    />
                     <button
                         type="submit"
-                        className="
-        w-full
-        px-6
-        py-2.5
-        bg-blue-600
-        text-white
-        font-medium
-        text-xs
-        leading-tight
-        uppercase
-        rounded
-        shadow-md
-        hover:bg-blue-700 hover:shadow-lg
-        focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-        active:bg-blue-800 active:shadow-lg
-        transition
-        duration-150
-        ease-in-out"
+                        className="mt-5 w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                     >
                         Sign up
                     </button>

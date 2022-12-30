@@ -9,12 +9,12 @@ function Home() {
         <Router>
             <Switch>
                 <Route exact path="/">
-                    <div className="container h-screen ">
+                    <div className="container h-screen mx-auto">
                         <Login />
                     </div>
                 </Route>
                 <Route exact path="/register">
-                    <div className="container h-screen ">
+                    <div className="container h-screen mx-auto ">
                         <Register />
                     </div>
                 </Route>
